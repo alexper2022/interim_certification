@@ -3,6 +3,7 @@ import os
 import sqlite3
 
 
+# Функция очистки терминала, должна работать на Win и на MAC
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
 
