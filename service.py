@@ -1,5 +1,6 @@
 import os
 import sqlite3
+from datetime import datetime
 
 
 # Функция очистки экрана для терминала, должна работать на Win и на MAC
@@ -12,22 +13,27 @@ def pause():
     os.system('pause' if os.name == 'nt' else 'read -s -n 1 -p "Для продолжения нажмите любую клавишу..."')
 
 
-def note_add():
+# Запись строки str_data в файл
+def note_add(title: str, data: str):
     with sqlite3.connect('database.lite') as db:
         cur = db.cursor()
-        cur.execute()
+        cur.execute(
+            f"INSERT INTO notebook (note_title, note_body, note_datetime) VALUES ('{title[:20:]}', '{data}', '{datetime.now()}');")
 
 
-def note_del():
+# Удаление строки с номером note_id из файла
+def note_del(note_id: int):
     with sqlite3.connect('database.lite') as db:
         cur = db.cursor()
-        cur.execute()
+        cur.execute(f"DELETE FROM notebook WHERE rowid = '{note_id}'")
+        db.commit()
 
 
-def note_edit():
+# Изменение строки с номером num из файла
+def note_edit(note_id: int, title: str, note: str):
     with sqlite3.connect('database.lite') as db:
         cur = db.cursor()
-        cur.execute()
+        cur.execute(f"UPDATE notebook SET note_title = '{title}', note_body = '{note}' WHERE rowid = '{note_id}'")
 
 
 def note_search():

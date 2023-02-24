@@ -1,7 +1,7 @@
 """
 Пользовательский интерфейс
 """
-from service import cls, pause, note_all, note_count, note_one_search
+from service import cls, pause, note_all, note_count, note_one_search, note_add, note_edit, note_del
 from viewer import note_view
 
 
@@ -53,10 +53,56 @@ def menu():
                 pause()
                 cls()
                 menu()
+            # 4. Добавить заметку.
             case 4:
-                pass
+                cls()
+                # Запрашиваем текст новой заметки
+                title = input('Введите краткое наименование (до 20 знаков):\n')
+                note = input('Введите заметку:\n')
+                # И записываем её в файл
+                note_add(title, note)
+                print("Заметка успешно добавлена\n")
+                del title, note
+                pause()
+                cls()
+                menu()
+            # 5. Редактировать заметку.
             case 5:
-                pass
+                cls()
+                # Запрашиваем номер строки для редактирования
+                note_id = int(input('Введите идентификатор заметки для редактирования: '))
+                cls()
+                note_view(note_one_search(note_id), True)
+                title = input("Введите заголовок:\n")
+                note = input("Введите новый текст заметки:\n")
+                note_edit(note_id, title, note)
+                print("Отредактированная заметка успешно сохранена!")
+                del note_id, title, note
+                pause()
+                cls()
+                menu()
+            # 6. Найти заметку.
+            case 6:
+                cls()
+            # 7. Удалить заметку.
+            case 7:
+                cls()
+                # Запрашиваем номер строки для удаления
+                note_id = int(input('Введите идентификатор заметки для удаления: '))
+                note_view(note_one_search(note_id), True)
+                yes_no = input(f"\nВы действительно хотите удалить заметку {note_id}?\n"
+                               f"Удаление не возможно отменить!\n"
+                               f"Если согласны введите Д,д,Y,y и нажмите Enter: ")
+                # если пользователь согласен с удалением
+                if yes_no in ["Y", "y", "Д", "д"]:
+                    # Удаляем запись
+                    note_del(note_id)
+                    cls()
+                    print("Заметка успешно удалена!\n")
+                    pause()
+                del note_id, yes_no
+                cls()
+                menu()
             case _:
                 cls()
                 menu()
