@@ -36,7 +36,18 @@ def note_search():
         cur.execute("")
 
 
+# Определение количества строк в файле
 def note_count():
     with sqlite3.connect('database.lite') as db:
         cur = db.cursor()
-        cur.execute("")
+        cur.execute("SELECT * FROM notebook;")
+        # items = cur.fetchall()
+    return len(cur.fetchall())
+
+
+# Формирование всех заметок в базе
+def note_all():
+    with sqlite3.connect('database.lite') as db:
+        cur = db.cursor()
+        cur.execute("SELECT rowid, * FROM notebook;")
+        return cur.fetchall()
