@@ -51,3 +51,11 @@ def note_all():
         cur = db.cursor()
         cur.execute("SELECT rowid, * FROM notebook;")
         return cur.fetchall()
+
+
+def note_one_search(note_id: int):
+    with sqlite3.connect('database.lite') as db:
+        cur = db.cursor()
+        # cur.execute("SELECT * FROM entry;")
+        cur.execute(f"SELECT rowid, * FROM notebook WHERE rowid = '{note_id}'")
+        return cur.fetchall()

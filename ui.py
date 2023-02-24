@@ -1,7 +1,7 @@
 """
 Пользовательский интерфейс
 """
-from service import cls, pause, note_all, note_count
+from service import cls, pause, note_all, note_count, note_one_search
 from viewer import note_view
 
 
@@ -44,8 +44,15 @@ def menu():
                 pause()
                 cls()
                 menu()
+            # 3. Просмотреть заметку полностью.
             case 3:
-                pass
+                cls()
+                note_id = int(input('Введите идентификатор заметки: '))
+                cls()
+                note_view(note_one_search(note_id), True)
+                pause()
+                cls()
+                menu()
             case 4:
                 pass
             case 5:
